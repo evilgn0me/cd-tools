@@ -34,7 +34,7 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/s
     rm get_helm.sh
 
 # Install Helmfile
-RUN HELMFILE_VERSION="1.0.0" && \
+RUN HELMFILE_VERSION="0.170.1" && \
     curl -sSL -o helmfile.tar.gz "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz" && \
     tar -xzf helmfile.tar.gz -C /usr/local/bin && \
     rm helmfile.tar.gz
