@@ -39,5 +39,8 @@ RUN HELMFILE_VERSION="0.170.1" && \
     tar -xzf helmfile.tar.gz -C /usr/local/bin && \
     rm helmfile.tar.gz
 
+# Install Helm diff plugin
+RUN helm plugin install https://github.com/databus23/helm-diff
+
 # Set default shell to bash
 SHELL ["/bin/bash", "-c"]
