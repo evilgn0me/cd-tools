@@ -38,6 +38,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/cd-tools:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/cd-tools:${{ steps.date.outputs.date }}
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/cd-tools:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/cd-tools:buildcache,mode=max

@@ -14,6 +14,8 @@ RUN apk add --no-cache \
     unzip \
     tzdata
 
+ARG TARGETARCH
+
 # Install yq
 RUN pip3 install --no-cache-dir yq
 
@@ -21,9 +23,9 @@ RUN pip3 install --no-cache-dir yq
 RUN pip3 install --no-cache-dir awscli
 
 # Install kubectl
-RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${TARGETARCH}/kubectl" && \
     chmod +x kubectl && \
-    mv kubectl /usr/local/bin/
+    mv kubectl /usr/local/bin/kubectl
 
 # Install Helm
 RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && \
@@ -32,10 +34,10 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/s
     rm get_helm.sh
 
 # Install Helmfile
-RUN HELMFILE_VERSION=$(curl -s https://api.github.com/repos/helmfile/helmfile/releases/latest | grep tag_name | cut -d '"' -f 4) && \
-    curl -Lo helmfile https://github.com/helmfile/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
-    chmod +x helmfile && \
-    mv helmfile /usr/local/bin/helmfile
+RUN HELMFILE_VERSION="1.0.0" && \
+    curl -sSL -o helmfile.tar.gz "https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz" && \
+    tar -xzf helmfile.tar.gz -C /usr/local/bin && \
+    rm helmfile.tar.gz
 
 # Set default shell to bash
 SHELL ["/bin/bash", "-c"]
