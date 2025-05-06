@@ -1,4 +1,4 @@
-FROM alpine:3.18
+FROM alpine:3.21.3
 
 # Install base tools
 RUN apk add --no-cache \
